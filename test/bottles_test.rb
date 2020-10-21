@@ -23,18 +23,8 @@ class BottlesTest < Minitest::Test
     assert_equal expected, Bottles.new.verse(3)
   end
 
-  def test_another_verse_my_test
-    # skip
-    expected =
-      "95 bottles of beer on the wall, " +
-      "95 bottles of beer.\n" +
-      "Take one down and pass it around, " +
-      "94 bottles of beer on the wall.\n"
-    assert_equal expected, Bottles.new.verse(95)
-  end
-
   def test_verse_2
-    skip
+    # skip
     expected =
       "2 bottles of beer on the wall, " +
       "2 bottles of beer.\n" +

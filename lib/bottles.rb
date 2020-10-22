@@ -1,4 +1,13 @@
-class Bottles 
+class Bottles
+
+  def song
+    verses(99, 0)
+  end
+
+  def verses(upper, lower)
+    upper.downto(lower).collect { |i| verse(i)}.join("\n")
+  end
+  
   def verse(number)
     case number
     when 0 
@@ -23,10 +32,5 @@ class Bottles
       "#{number - 1} bottles of beer on the wall.\n"
     end
   end
-  def verses(upper, lower)
-    upper.downto(lower).collect { |i| verse(i)}.join("\n")
-  end
-  def song
-    verses(99,0)
-  end
+ 
 end

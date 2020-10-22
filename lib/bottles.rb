@@ -19,7 +19,7 @@ class Bottles
       "#{number} #{container(number)} of beer on the wall, " +
       "#{number} #{container(number)} of beer.\n" +
       "Take #{pronoun(number)} down and pass it around, " + 
-      "no more bottles of beer on the wall.\n"
+      "no more #{container(number - 1)} of beer on the wall.\n"
     else
       "#{number} #{container(number)} of beer on the wall, " +
       "#{number} #{container(number)} of beer.\n" +
@@ -41,5 +41,8 @@ class Bottles
    else
      "one"
    end
+ end
+
+ def quantity
  end
 end

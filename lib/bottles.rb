@@ -23,15 +23,10 @@ class Bottles
       "#{number - 1} bottles of beer on the wall.\n"
     end
   end
-  def verses(high, low)
-  "99 bottles of beer on the wall, " +
-    "99 bottles of beer.\n" +
-    "Take one down and pass it around, " +
-    "98 bottles of beer on the wall.\n" +
-    "\n" +
-    "98 bottles of beer on the wall, " +
-    "98 bottles of beer.\n" +
-    "Take one down and pass it around, " +
-    "97 bottles of beer on the wall.\n"
+  def verses(upper, lower)
+    upper.downto(lower).collect { |i| verse(i)}.join("\n")
+  end
+  def song
+    verses(99,0)
   end
 end

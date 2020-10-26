@@ -9,21 +9,47 @@ class Bottles
   end
 
   def verse(number)
-      "#{quantity(number).capitalize} #{container(number)} of beer on the wall, " +
-      "#{quantity(number)} #{container(number)} of beer.\n" +
-      "#{action(number)}, " +
-      "#{quantity(successor(number))} #{container(successor(number))} of beer on the wall.\n"
+    "#{quantity(number).capitalize} #{container(number)} of beer on the wall, " +
+    "#{quantity(number)} #{container(number)} of beer.\n" +
+    "#{action(number)}, " +
+    "#{quantity(successor(number))} #{container(successor(number))} of beer on the wall.\n"
   end
-  
+
   def container(number)
-    if number == 1
-      "bottle"
-    else
-    "bottles"
-    end
+    BottleNumber.new(number).container
   end
 
   def pronoun(number)
+    BottleNumber.new(number).pronoun
+  end
+
+  def quantity(number)   
+    BottleNumber.new(number).quantity
+  end
+
+  def action(number) 
+    BottleNumber.new(number).action
+  end
+
+  def successor(number)
+    BottleNumber.new(number).successor
+  end
+end
+
+class BottleNumber
+  attr_reader :number
+  def initialize(number)
+    @number = number
+  end
+  def container
+    if number == 1
+      "bottle"
+    else
+      "bottles"
+    end
+  end
+
+  def pronoun
    if number == 1
      "it"
    else
@@ -31,26 +57,26 @@ class Bottles
    end
   end
 
-  def quantity(number)
+  def quantity
     case number
-      when -1
-        "99"
-      when 0
-        "no more"
-      else
-        number.to_s 
+    when -1
+      "99"
+    when 0
+      "no more"
+    else
+      number.to_s 
     end   
   end
 
-  def action(number) 
+  def action 
     if number == 0
       "Go to the store and buy some more"
     else
-     "Take #{pronoun(number)} down and pass it around"
+      "Take #{pronoun} down and pass it around"
     end 
   end
 
-  def successor(number)
+  def successor
     if number == 0
       99
     else

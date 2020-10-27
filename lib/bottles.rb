@@ -1,64 +1,61 @@
 class Bottles
-
   def song
-    verses(99, 0)
+    verses(99,0)
   end
-  
+
   def verses(upper, lower)
     upper.downto(lower).collect { |i| verse(i)}.join("\n")
   end
 
   def verse(number)
-    bottle_number = BottleNumber.for(number)
-
-    "#{bottle_number} of beer on the wall, ".capitalize +
-    "#{bottle_number} of beer.\n" +
-    "#{bottle_number.action}, " +
-    "#{bottle_number.successor} of beer on the wall.\n"
+    BottleVerse.new(number).lyrics
   end
 end
 
 class BottleNumber
-  attr_reader :number
-  def initialize(number)
-    @number = number
-  end
-
   def self.for(number)
-    registry.find { |candidate| candidate.handles?(number)}.new(number) 
+    registry.find { |candidate| candidate.handles?(number)}.new(number)
   end
 
-  def self.registry 
-    @registry ||= []
+  def self.registry
+    @registry ||= [BottleNumber]
   end
 
-  def self.register(candidate) 
+  def self.register(candidate)
     registry.prepend(candidate)
+  end
+
+  def self.inherited(candidate)
+    register(candidate)
   end
 
   def self.handles?(number)
     true
   end
-  BottleNumber.register(self)
+
+  attr_reader :number
+  def initialize(number)
+    @number = number
+  end
 
   def to_s
     "#{quantity} #{container}"
+  end
+
+  def quantity
+    number.to_s
   end
 
   def container
     "bottles"
   end
 
+  def action
+    "Take #{pronoun} down and pass it around"
+  end
+
   def pronoun
     "one"
-  end
-
-  def quantity
-    number.to_s 
-  end
-
-  def action 
-    "Take #{pronoun} down and pass it around"
   end
 
   def successor
@@ -67,10 +64,8 @@ class BottleNumber
 end
 
 class BottleNumber0 < BottleNumber
-  BottleNumber.register(self)
-
   def self.handles?(number)
-    number == 0 
+    number == 0
   end
 
   def quantity
@@ -87,7 +82,6 @@ class BottleNumber0 < BottleNumber
 end
 
 class BottleNumber1 < BottleNumber
-  BottleNumber.register(self)
   def self.handles?(number)
     number == 1
   end
@@ -96,23 +90,37 @@ class BottleNumber1 < BottleNumber
     "bottle"
   end
 
-  def pronoun 
+  def pronoun
     "it"
   end
 end
 
 class BottleNumber6 < BottleNumber
-  BottleNumber.register(self)
-
   def self.handles?(number)
-    number == 6 
+    number == 6
+  end
+
+  def quantity
+    "1"
   end
 
   def container
     "six-pack"
   end
+end
 
-  def quantity
-    "1"
+class BottleVerse
+  attr_reader :number
+
+  def initialize(number)
+    @number = number
+  end
+  def lyrics
+    bottle_number = BottleNumber.for(number)
+
+    "#{bottle_number} of beer on the wall, ".capitalize +
+    "#{bottle_number} of beer.\n" +
+    "#{bottle_number.action}, " +
+    "#{bottle_number.successor} of beer on the wall.\n"
   end
 end

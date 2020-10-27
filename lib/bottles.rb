@@ -12,7 +12,8 @@ class Bottles
   end
 
   def verse(number)
-    verse_template.new(number).lyrics
+    verse_template.lyrics(number)
+    # verse_template.new(number).lyrics
   end
 end
 
@@ -36,7 +37,7 @@ class BottleNumber
   def self.handles?(number)
     true
   end
-
+  
   attr_reader :number
   def initialize(number)
     @number = number
@@ -114,6 +115,10 @@ class BottleNumber6 < BottleNumber
 end
 
 class BottleVerse
+  def self.lyrics(number)
+    new(number).lyrics 
+  end
+  
   attr_reader :number
   def initialize(number)
     @number = number
